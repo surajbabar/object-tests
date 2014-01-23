@@ -9,7 +9,6 @@ public class Person implements Comparable<Person>{
     public String getName() {
         return name;
     }
-
     public int getAge() {
         return age;
     }
@@ -19,7 +18,6 @@ public class Person implements Comparable<Person>{
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + age;
         return result;
-
     }
 
     @Override

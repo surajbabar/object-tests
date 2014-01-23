@@ -1,0 +1,36 @@
+<project name="object-tests" default="removeBuild">
+    <target name="createDest">
+        <mkdir dir="build"/>
+        <mkdir dir="build/classes"/>
+        <mkdir dir="build/classes/tests"/>
+    </target>
+    <target name="compile" depends="createDest">
+        <javac srcdir="src" destdir="build/classes" includeantruntime="false"/>
+        <javac srcdir="tests" destdir="build/classes/tests" classpath="lib/junit-4.10.jar;build/classes"
+               includeantruntime="false"/>
+    </target>
+    <target name="test" depends="compile">
+                <junit failureproperty="junit.failure" >
+                    <classpath>
+                        <pathelement location="build/classes"/>
+                        <pathelement location="build/classes/tests"/>
+                        <pathelement location="lib/junit-4.10.jar"/>
+                    </classpath>
+                    <batchtest>
+                        <fileset dir="build/classes/tests">
+                            <include name="**/*Test*"/>
+                            <exclude name="**/*$*.class"/>
+                        </fileset>
+                    </batchtest>
+                    <formatter type="brief" usefile="false" />
+                </junit>
+        <fail message="Some tests failed - Build failed" status="2">
+            <condition>
+                <isset property="junit.failure" />
+            </condition>
+        </fail>
+        </target>
+    <target name="removeBuild" depends="test">
+        <delete dir="build"/>
+    </target>
+</project>

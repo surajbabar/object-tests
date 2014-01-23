@@ -224,4 +224,12 @@ public class PersonTest {
 
         assertEquals(people, expected);
     }
+
+    @Test(expected = java.lang.ClassCastException.class)
+    public void testGivesExceptionWhenIllegalClassCastingHappens() throws ClassCastException {
+        ArrayList list = new ArrayList<Integer>();
+        list.add(new Object());
+        list.add(new Object());
+        Integer a = (Integer)list.get(0);
+    }
 }
